@@ -5,4 +5,4 @@ COPY mvnw pom.xml ./
 COPY src ./src
 RUN ./mvnw package -DskipTests
 EXPOSE 8080
-CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "gcr.io/k8s-minikube/kicbase:v0.0.43.jar"]

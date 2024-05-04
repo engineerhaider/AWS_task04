@@ -1,0 +1,34 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellocontroller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellocontroller
+  template:
+    metadata:
+      labels:
+        app: hellocontroller
+    spec:
+      containers:
+      - name: hellocontroller
+        image: gcr.io/k8s-minikube/kicbase:v0.0.43
+        command: ["/bin/sh"]
+        args: ["-c", "sleep infinity"]
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
